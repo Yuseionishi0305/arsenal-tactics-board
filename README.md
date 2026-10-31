@@ -4,7 +4,13 @@ HTML / CSS / JavaScriptのみ。ビルド、外部ライブラリ不要。
 
 駒のドラッグ、7種類のフォーメーション、11人の選択、全体移動、サイド反転、配置の端末保存に対応。
 
-選手データは暫定です。全選手の所属・背番号は要確認。index.htmlのARSENAL_PLAYERSを編集してください。
+選手データは2026/27仕様（2026年11月1日確認）。プレミアリーグ公式の今季選手一覧31人と、UEFA一覧にあるGKセットフォードの計32人を収録しています。移籍・背番号変更時はindex.htmlのARSENAL_PLAYERSを編集してください。
+
+- 主出典：https://www.premierleague.com/en/clubs/3/arsenal/squad?se=418
+- セットフォード補足：https://www.uefa.com/nationalassociations/teams/52280--arsenal/squad/
+- ヌワネリのレンタル確認：https://www.bvb.de/de/en/news/news-overview/news.html/2026/9/1/BVB-signs-Ethan-Nwaneri-on-loan.html
+
+コンサ15番、ギマランイス39番、ツォリス17番、メリエ30番などを反映。ローン中・今季一覧にない旧メンバーは選択対象外です。旧配置の座標は維持し、対象外の選手だけ今季の選手に置き換えます。
 
 HTTPSで一度開いて「オフライン準備完了」を確認後、ホーム画面に追加できます。
 iPhone: Safariの共有 → ホーム画面に追加。
