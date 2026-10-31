@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b91c1c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="戦術ボード">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>アーセナル戦術ボード</title>
+<style>
+:root{color-scheme:dark light;--bg:#101820;--panel:#1b2733;--input:#263746;--text:#f4f7fb;--muted:#bbcbd8;--border:#526678}
+@media(prefers-color-scheme:light){:root{--bg:#edf2f5;--panel:white;--input:#f1f5f9;--text:#172534;--muted:#4c6174;--border:#afbfcc}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif}button,select,input{font:inherit}button,select{min-height:44px;padding:8px;border:1px solid var(--border);border-radius:10px;background:var(--input);color:var(--text)}button{cursor:pointer}button:disabled{opacity:.5}button:focus-visible,select:focus-visible,input:focus-visible,svg:focus-visible{outline:3px solid #facc15;outline-offset:2px}.primary{background:#b91c1c;color:#fff;border-color:#b91c1c}button[aria-pressed=true]{background:#126344;color:white}.app{max-width:600px;margin:auto;min-height:100dvh;display:flex;flex-direction:column}header{padding:max(12px,env(safe-area-inset-top)) 14px 8px}h1{font-size:19px;margin:0}.subtitle{font-size:11px;letter-spacing:.16em;color:var(--muted);margin:5px 0 9px}.legend{display:flex;gap:15px;font-size:12px}.legend span:last-child{margin-left:auto;font-weight:bold}main{padding:0 8px 8px}.pitch-wrap{max-width:440px;margin:auto;border-radius:12px;overflow:hidden;box-shadow:0 6px 25px #0003}#pitch{display:block;width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;background:#187447}.lines{stroke:white;stroke-width:1.8;fill:none;opacity:.85}.token{cursor:grab}.disc{stroke:white;stroke-width:1.5}.home .disc{fill:#c9202c}.away .disc{fill:#1854b9}.num{fill:white;font-size:11px;font-weight:800;text-anchor:middle;dominant-baseline:central;pointer-events:none}.name{fill:white;stroke:#103824;stroke-width:3px;paint-order:stroke;stroke-linejoin:round;font-size:8px;font-weight:700;text-anchor:middle;pointer-events:none}.selected .disc{stroke:#fde047;stroke-width:3}.hint{font-size:12px;color:var(--muted);line-height:1.6;margin:8px 4px 0}.panel{position:sticky;bottom:0;z-index:2;margin-top:auto;padding:10px 12px max(10px,env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid var(--border);box-shadow:0 -4px 16px #0002}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.field{display:grid;gap:4px;font-size:12px;font-weight:700;min-width:0}select{width:100%}.actions{margin-top:8px}fieldset{border:1px solid var(--border);border-radius:10px;padding:4px 8px;margin:8px 0 0}legend{font-size:12px}.radios{display:flex;gap:4px}.radios label{display:flex;align-items:center;gap:5px;min-height:44px;font-size:13px;flex:1}input[type=radio],input[type=checkbox]{width:20px;height:20px;accent-color:#b91c1c;flex-shrink:0}#status{font-size:12px;color:var(--muted);min-height:18px;margin:8px 0 0;line-height:1.5}[hidden]{display:none!important}dialog{width:min(94vw,520px);max-height:85dvh;padding:16px;border:1px solid var(--border);border-radius:16px;background:var(--panel);color:var(--text)}dialog::backdrop{background:#0009}.dialog-head,.dialog-foot{display:flex;justify-content:space-between;align-items:center;gap:8px}h2{font-size:20px;margin:0}dialog p{font-size:13px;color:var(--muted);line-height:1.6}#roster{display:grid;gap:6px;max-height:48dvh;overflow:auto;margin:10px 0;padding:3px}.player-row{display:flex;align-items:center;gap:10px;min-height:52px;border:1px solid var(--border);border-radius:9px;background:var(--input);padding:7px 10px}.player-row:has(:checked){border-color:#df7b83}.player-row small{display:block;color:var(--muted);margin-top:3px}@media(max-height:760px){.pitch-wrap{max-width:350px}}
+</style>
+<div class="app">
+<header><h1>アーセナル戦術ボード</h1><p class="subtitle">TACTICS / 11 v 11</p><div class="legend"><span>🔴 アーセナル</span><span>🔵 相手</span><span id="direction">赤の攻撃 ↑</span></div></header>
+<main><div class="pitch-wrap">
+<svg id="pitch" viewBox="0 0 360 540" tabindex="0" role="group" aria-label="戦術ピッチ。駒をドラッグして移動" aria-describedby="help">
+<defs><pattern id="grass" width="360" height="90" patternUnits="userSpaceOnUse"><rect width="360" height="90" fill="#187447"/><rect width="360" height="45" fill="#1d8050"/></pattern></defs><rect width="360" height="540" fill="url(#grass)"/>
+<g class="lines" aria-hidden="true"><rect x="18" y="18" width="324" height="504"/><path d="M18 270H342"/><circle cx="180" cy="270" r="43"/><circle cx="180" cy="270" r="2" fill="white"/><rect x="91" y="18" width="178" height="78"/><rect x="138" y="18" width="84" height="29"/><circle cx="180" cy="73" r="2" fill="white"/><path d="M144 96Q180 126 216 96"/><rect x="91" y="444" width="178" height="78"/><rect x="138" y="493" width="84" height="29"/><circle cx="180" cy="467" r="2" fill="white"/><path d="M144 444Q180 414 216 444M155 18V7H205V18M155 522V533H205V522M18 28Q28 28 28 18M332 18Q332 28 342 28M18 512Q28 512 28 522M332 522Q332 512 342 512"/></g>
+<g id="awayTokens"></g><g id="homeTokens"></g></svg></div>
+<p class="hint" id="help">駒をドラッグして移動。全体移動ONでは空いた場所からも操作できます。PCは駒をクリック後、矢印キーでも移動できます。</p></main>
+<section class="panel" aria-label="操作パネル"><div class="two"><label class="field">自チーム<select id="homeFormation"></select></label><label class="field">相手チーム<select id="awayFormation"></select></label></div><div class="two actions"><button id="flip">⇅ サイド入れ替え</button><button id="groupToggle" aria-pressed="false">全体移動 OFF</button></div><fieldset id="groupOptions" hidden><legend>まとめて動かすチーム</legend><div class="radios"><label><input type="radio" name="target" value="home" checked>自チーム</label><label><input type="radio" name="target" value="away">相手</label><label><input type="radio" name="target" value="both">両方</label></div></fieldset><div class="two actions"><button class="primary" id="choose">選手選択 11/11</button><button id="reset">配置リセット</button></div><p id="status" role="status" aria-live="polite">準備中…</p></section>
+</div>
+<dialog id="players" aria-labelledby="playersTitle"><div class="dialog-head"><h2 id="playersTitle">出場する11人を選択</h2><button id="close">閉じる</button></div><p>所属・背番号は要確認の暫定データです。11人を選ぶと適用できます。GK・DF・MF・FW順に配置し、細かな位置はドラッグで調整できます。</p><div id="roster"></div><div class="dialog-foot"><strong id="count" aria-live="polite"></strong><button id="apply" class="primary">この11人を適用</button></div></dialog>
+<script>
+'use strict';
+/* 選手データ編集欄。最新のトップチーム名簿は未確認です。
+   全選手の所属・背番号・登録区分は要確認。idは保存データの識別用です。 */
+const ARSENAL_PLAYERS = [
+ {id:'raya',number:1,name:'ダビド・ラヤ',short:'ラヤ',position:'GK'}, // 要確認
+ {id:'kepa',number:13,name:'ケパ・アリサバラガ',short:'ケパ',position:'GK'}, // 要確認
+ {id:'setford',number:35,name:'トミー・セットフォード',short:'セットフォード',position:'GK'}, // 要確認
+ {id:'saliba',number:2,name:'ウィリアム・サリバ',short:'サリバ',position:'DF'}, // 要確認
+ {id:'mosquera',number:3,name:'クリスティアン・モスケラ',short:'モスケラ',position:'DF'}, // 要確認
+ {id:'white',number:4,name:'ベン・ホワイト',short:'ホワイト',position:'DF'}, // 要確認
+ {id:'hincapie',number:5,name:'ピエロ・インカピエ',short:'インカピエ',position:'DF'}, // 要確認
+ {id:'gabriel',number:6,name:'ガブリエウ・マガリャンイス',short:'ガブリエウ',position:'DF'}, // 要確認
+ {id:'timber',number:12,name:'ユリエン・ティンバー',short:'ティンバー',position:'DF'}, // 要確認
+ {id:'calafiori',number:33,name:'リッカルド・カラフィオーリ',short:'カラフィオーリ',position:'DF'}, // 要確認
+ {id:'lewisskelly',number:49,name:'マイルズ・ルイス＝スケリー',short:'ルイス＝スケリー',position:'DF'}, // 要確認
+ {id:'odegaard',number:8,name:'マルティン・ウーデゴール',short:'ウーデゴール',position:'MF'}, // 要確認
+ {id:'eze',number:10,name:'エベレチ・エゼ',short:'エゼ',position:'MF'}, // 要確認
+ {id:'norgaard',number:16,name:'クリスティアン・ノアゴール',short:'ノアゴール',position:'MF'}, // 要確認
+ {id:'nwaneri',number:22,name:'イーサン・ヌワネリ',short:'ヌワネリ',position:'MF'}, // 要確認
+ {id:'merino',number:23,name:'ミケル・メリーノ',short:'メリーノ',position:'MF'}, // 要確認
+ {id:'zubimendi',number:36,name:'マルティン・スビメンディ',short:'スビメンディ',position:'MF'}, // 要確認
+ {id:'rice',number:41,name:'デクラン・ライス',short:'ライス',position:'MF'}, // 要確認
+ {id:'dowman',number:56,name:'マックス・ダウマン',short:'ダウマン',position:'MF'}, // 要確認
+ {id:'saka',number:7,name:'ブカヨ・サカ',short:'サカ',position:'FW'}, // 要確認
+ {id:'jesus',number:9,name:'ガブリエウ・ジェズス',short:'ジェズス',position:'FW'}, // 要確認
+ {id:'martinelli',number:11,name:'ガブリエウ・マルティネッリ',short:'マルティネッリ',position:'FW'}, // 要確認
+ {id:'gyokeres',number:14,name:'ヴィクトル・ギェケレシュ',short:'ギェケレシュ',position:'FW'}, // 要確認
+ {id:'trossard',number:19,name:'レアンドロ・トロサール',short:'トロサール',position:'FW'}, // 要確認
+ {id:'madueke',number:20,name:'ノニ・マドゥエケ',short:'マドゥエケ',position:'FW'}, // 要確認
+ {id:'havertz',number:29,name:'カイ・ハヴァーツ',short:'ハヴァーツ',position:'FW'} // 要確認
+];
+const FORMATIONS={
+ '4-3-3':[['GK'],['LB','CB','CB','RB'],['CM','DM','CM'],['LW','ST','RW']],
+ '4-2-3-1':[['GK'],['LB','CB','CB','RB'],['DM','DM'],['LW','AM','RW'],['ST']],
+ '4-4-2':[['GK'],['LB','CB','CB','RB'],['LM','CM','CM','RM'],['ST','ST']],
+ '3-5-2':[['GK'],['CB','CB','CB'],['LWB','CM','DM','CM','RWB'],['ST','ST']],
+ '3-4-3':[['GK'],['CB','CB','CB'],['LM','CM','CM','RM'],['LW','ST','RW']],
+ '5-3-2':[['GK'],['LWB','CB','CB','CB','RWB'],['CM','DM','CM'],['ST','ST']],
+ '4-1-4-1':[['GK'],['LB','CB','CB','RB'],['DM'],['LM','CM','CM','RM'],['ST']]
+};
+const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg', KEY='arsenal-tactics-v1';
+const byId=new Map(ARSENAL_PLAYERS.map(p=>[p.id,p])), nodes=new Map();
+let state={homeFormation:'4-3-3',awayFormation:'4-4-2',flipped:false,lineup:['raya','calafiori','gabriel','saliba','timber','rice','zubimendi','odegaard','martinelli','gyokeres','saka'],home:[],away:[]};
+let group=false,target='home',drag=null,selected=null,draft=new Set(),ready=false;
+const say=text=>$('status').textContent=text;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{say('端末への保存ができません。現在の画面では操作できます。')}}
+function slots(name,team){const rows=FORMATIONS[name],reverse=team==='home'?state.flipped:!state.flipped;return rows.flatMap((row,r)=>row.map((pos,c)=>{const x=row.length===1?180:50+c*260/(row.length-1),y=492-r*204/(rows.length-1);return{x:reverse?360-x:x,y:reverse?540-y:y,position:pos}}))}
+function resetTeam(team){state[team]=slots(state[team+'Formation'],team).map((p,i)=>({...p,id:team==='home'?state.lineup[i]:'away-'+i}))}
+function restore(){try{const s=JSON.parse(localStorage.getItem(KEY));const valid=a=>Array.isArray(a)&&a.length===11&&a.every(p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.y)&&p.x>=34&&p.x<=326&&p.y>=34&&p.y<=506&&typeof p.position==='string');if(!s||!Object.hasOwn(FORMATIONS,s.homeFormation)||!Object.hasOwn(FORMATIONS,s.awayFormation)||typeof s.flipped!=='boolean'||!Array.isArray(s.lineup)||s.lineup.length!==11||new Set(s.lineup).size!==11||!s.lineup.every(id=>byId.has(id))||!valid(s.home)||!valid(s.away)||!s.home.every((p,i)=>p.id===s.lineup[i])||!s.away.every((p,i)=>p.id==='away-'+i))return false;state=s;return true}catch{return false}}
+function el(tag,attrs={}){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);return e}
+function render(){nodes.clear();for(const team of ['away','home']){$(team+'Tokens').replaceChildren();state[team].forEach((p,i)=>{const player=team==='home'?byId.get(p.id):null,key=team+':'+i;const g=el('g',{'class':'token '+team+(selected===key?' selected':''),'data-team':team,'data-index':i,transform:`translate(${p.x} ${p.y})`});const title=el('title');title.textContent=player?player.number+' '+player.name+' / '+p.position:'相手 '+p.position;const n=el('text',{'class':'num'});n.textContent=player?player.number:p.position;if(!player&&p.position.length>2)n.style.fontSize='9px';g.append(title,el('circle',{r:21,fill:'transparent','pointer-events':'all'}),el('circle',{r:14.5,'class':'disc'}),n);if(player){const name=el('text',{'class':'name',y:25});name.textContent=player.short;g.append(name)}$(team+'Tokens').append(g);nodes.set(key,g)})}$('homeFormation').value=state.homeFormation;$('awayFormation').value=state.awayFormation;$('direction').textContent='赤の攻撃 '+(state.flipped?'↓':'↑')}
+function positions(){for(const t of ['home','away'])state[t].forEach((p,i)=>nodes.get(t+':'+i).setAttribute('transform',`translate(${p.x} ${p.y})`))}
+function point(e){const m=$('pitch').getScreenCTM();if(!m)return null;const p=$('pitch').createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(m.inverse())}
+function entries(teams){return teams.flatMap(t=>state[t].map((p,i)=>({team:t,index:i,x:p.x,y:p.y})))}
+function groupEntries(){return entries(target==='both'?['home','away']:[target])}
+function move(a,dx,dy){dx=clamp(dx,34-Math.min(...a.map(p=>p.x)),326-Math.max(...a.map(p=>p.x)));dy=clamp(dy,34-Math.min(...a.map(p=>p.y)),506-Math.max(...a.map(p=>p.y)));for(const p of a){state[p.team][p.index].x=p.x+dx;state[p.team][p.index].y=p.y+dy}positions()}
+function select(key){selected=key;for(const[k,n]of nodes)n.classList.toggle('selected',k===key)}
+$('pitch').addEventListener('pointerdown',e=>{if(drag||!e.isPrimary||e.button!==0)return;const n=e.target.closest('.token');if(!group&&!n)return;const p=point(e);if(!p)return;let a;if(group)a=groupEntries();else{const t=n.dataset.team,i=Number(n.dataset.index),v=state[t][i];a=[{team:t,index:i,x:v.x,y:v.y}];select(t+':'+i)}e.preventDefault();$('pitch').focus({preventScroll:true});$('pitch').setPointerCapture(e.pointerId);drag={id:e.pointerId,x:p.x,y:p.y,entries:a}});
+$('pitch').addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const p=point(e);if(p){e.preventDefault();move(drag.entries,p.x-drag.x,p.y-drag.y)}});
+function finish(e){if(!drag||e.pointerId!==drag.id)return;const id=drag.id;drag=null;if($('pitch').hasPointerCapture(id))$('pitch').releasePointerCapture(id);save()}
+for(const name of ['pointerup','pointercancel','lostpointercapture'])$('pitch').addEventListener(name,finish);
+$('pitch').addEventListener('keydown',e=>{const steps={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};if(!steps[e.key]||(!group&&!selected))return;e.preventDefault();let a;if(group)a=groupEntries();else{const[t,i]=selected.split(':'),p=state[t][i];a=[{team:t,index:Number(i),x:p.x,y:p.y}]}const step=e.shiftKey?10:3;move(a,steps[e.key][0]*step,steps[e.key][1]*step);save()});
+for(const team of ['home','away']){for(const name of Object.keys(FORMATIONS)){const o=document.createElement('option');o.value=o.textContent=name;$(team+'Formation').append(o)}$(team+'Formation').addEventListener('change',e=>{state[team+'Formation']=e.target.value;resetTeam(team);render();say('フォーメーションを再配置しました。');save()})}
+$('flip').onclick=()=>{state.flipped=!state.flipped;for(const t of ['home','away'])for(const p of state[t]){p.x=360-p.x;p.y=540-p.y}render();say('全駒を点対称に反転しました。');save()};
+$('reset').onclick=()=>{resetTeam('home');resetTeam('away');render();say('現在の選手・フォーメーション・攻撃方向でリセットしました。');save()};
+$('groupToggle').onclick=()=>{group=!group;$('groupToggle').setAttribute('aria-pressed',String(group));$('groupToggle').textContent='全体移動 '+(group?'ON':'OFF');$('groupOptions').hidden=!group;say(group?'移動するチームを選び、ピッチをドラッグしてください。':'個別移動に切り替えました。')};
+document.querySelectorAll('[name=target]').forEach(r=>r.onchange=()=>target=r.value);
+function count(){$('count').textContent=draft.size+' / 11人';$('apply').disabled=draft.size!==11;$('roster').querySelectorAll('input').forEach(c=>c.disabled=draft.size>=11&&!c.checked)}
+$('choose').onclick=()=>{draft=new Set(state.lineup);$('roster').replaceChildren();for(const p of ARSENAL_PLAYERS){const row=document.createElement('label');row.className='player-row';const c=document.createElement('input');c.type='checkbox';c.checked=draft.has(p.id);const detail=document.createElement('span'),name=document.createElement('span'),small=document.createElement('small');name.textContent=p.number+' '+p.name;small.textContent=p.position+' ・所属／背番号は要確認';detail.append(name,small);row.append(c,detail);$('roster').append(row);c.onchange=()=>{c.checked?draft.add(p.id):draft.delete(p.id);count()}}count();$('players').showModal()};
+$('close').onclick=()=>$('players').close();
+$('apply').onclick=()=>{if(draft.size!==11)return;const rank={GK:0,DF:1,MF:2,FW:3};state.lineup=ARSENAL_PLAYERS.filter(p=>draft.has(p.id)).sort((a,b)=>rank[a.position]-rank[b.position]).map(p=>p.id);selected=null;resetTeam('home');render();$('players').close();say('11人を適用しました。細かな位置はドラッグで調整してください。');save()};
+function connection(){say(!navigator.onLine?'オフラインです。保存済みのボードを利用できます。':ready?'オフライン準備完了。配置は端末に自動保存されます。':'配置は端末に自動保存されます。')}
+window.addEventListener('online',connection);window.addEventListener('offline',connection);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save()});
+if(!restore()){resetTeam('home');resetTeam('away')}render();connection();
+if('serviceWorker'in navigator&&isSecureContext){navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).then(()=>navigator.serviceWorker.ready).then(()=>{ready=true;connection()}).catch(()=>say('オフライン準備に失敗しました。オンラインでは利用できます。'))}else say('オフライン機能はHTTPSまたはlocalhostで利用できます。');
+</script>
+</html>
