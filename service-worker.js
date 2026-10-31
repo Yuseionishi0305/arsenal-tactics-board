@@ -1,5 +1,5 @@
 'use strict';
-const PREFIX='arsenal-tactics-', CACHE=PREFIX+'v3-landscape';
+const PREFIX='arsenal-tactics-', CACHE=PREFIX+'v4-ball';
 const APP=new URL('./index.html',self.location.href).href;
 const FILES=['./index.html','./manifest.json','./icon-192.png','./icon-512.png'].map(p=>new URL(p,self.location.href).href);
 self.addEventListener('install',e=>e.waitUntil((async()=>{
